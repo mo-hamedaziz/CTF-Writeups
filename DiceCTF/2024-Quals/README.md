@@ -81,4 +81,6 @@ Now we can execute the 'win' function by typing ``` win(history) ``` in the cons
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/gpwaf.png)
 
 ## <br><br> Conclusion
-I hope you enjoy and learn something, and if there are any mistakes, please feel free to point out private messages and emails, thank you very much!
+I hope you enjoy and learn something, and if there are any mistakes, please feel free to point out private messages and emails, thank you very much!<br>
+My linkedin account: https://www.linkedin.com/in/mohamed-aziz-bchini/<br>
+My email: mohamedaziz0801@gmail.com<br>
