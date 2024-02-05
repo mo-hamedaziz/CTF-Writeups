@@ -130,14 +130,14 @@ try {
     }
 ```
 Thus we can get the flag if:<br>1/The user credential provided should return an id<br>2/The user should have admin permission<br><br>
-The trick that comes to mind is using **JavaScript prototype **inheritance**. (You can read more about it **[here]**(https://portswigger.net/web-security/prototype-pollution))<br>
-In fact, JavaScript is based on prototypes: Each Object has an attribute called '\_\_prototype__'.<br>
+The trick that comes to mind is using **JavaScript prototype inheritance**. (You can read more about it [**here**](https://portswigger.net/web-security/prototype-pollution))<br>
+In fact, JavaScript is based on prototypes: Each Object has an attribute called ```'__prototype__'```.<br>
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/a2d71137-abc2-451f-8630-75edd708f8ba)<br>
-The idea is clear now, since isAdmin is JavaScript Object ```const isAdmin = {};``` then we'll get (*isAdmin[__prototype__]=true*).<br>
-The most obvious solution is to pass ***\_\_proto__*** as username. Thus, the SQL is now possible in the password field.<br>
-The easiest payload to pass as password is ***1' or id=1; --***
-![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/0d3eaf8e-b0a3-4e1c-b3fb-375d3f177de2)<br>
-We get our flag after submitting:![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/d05b9ffa-9957-4752-9f19-8f35e8c48351)
+The idea is clear now, since isAdmin is JavaScript Object ```const isAdmin = {};``` then we'll get ```isAdmin[__prototype__]=true```.<br>
+The most obvious solution is to pass ```__proto__``` as **username**. Thus, the SQL is now possible in the password field.<br>
+The easiest payload to pass as **password** is ```whatever' or id=1; --```
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/0d3eaf8e-b0a3-4e1c-b3fb-375d3f177de2)<br><br>
+We get our flag after submitting:<br>![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/d05b9ffa-9957-4752-9f19-8f35e8c48351)
 ### <br>web/gpwaf<br>
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/gpwaf.png)
 
