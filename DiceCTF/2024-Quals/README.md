@@ -77,7 +77,67 @@ Now we can execute the **win** function by typing ``` win(history) ``` in the co
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/0c4b27ae-c509-47b3-8350-fcc65221e917)
 <br><br>
 ### <br>web/funnylogin<br>
-![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/funnylogin.png)
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/funnylogin.png)<br><br>
+The application is just a login page. The challenge goal is to get the flag once a valid user is logged as an admin.<br><br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/9311e3ec-88a2-4ab6-88a6-a7685b2cdb19)<br><br>
+The challenge comes with a compressed file that contains the source code.<br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/7d3f60a6-f1ba-4d40-a4c8-72c02cc24795)<br>
+This web app have a single route that is /api/login with a POST request. Let's break down the **app.js** file:
+Step 1- Creating and SQL table called **users** with **id, username and password** columns:
+```
+const db = require('better-sqlite3')('db.sqlite3');
+db.exec(`DROP TABLE IF EXISTS users;`);
+db.exec(`CREATE TABLE users(
+    id INTEGER PRIMARY KEY,
+    username TEXT,
+    password TEXT
+);`);
+```
+Step 2- Generating 10000 random users and inserting them in the table:
+```
+const users = [...Array(100_000)].map(() => ({ user: `user-${crypto.randomUUID()}`, pass: crypto.randomBytes(8).toString("hex") }));
+db.exec(`INSERT INTO users (id, username, password) VALUES ${users.map((u,i) => `(${i}, '${u.user}', '${u.pass}')`).join(", ")}`);
+```
+The goal of generating such a big number of users with random usernames is to make the bruteforce impossible.<br><br>
+Step 3- Set a random user as an admin:
+```
+const isAdmin = {};
+const newAdmin = users[Math.floor(Math.random() * users.length)];
+isAdmin[newAdmin.user] = true;
+```
+It's important to note that the admin if randomly defined at **runtime**. The goal of selecting the admin randomly is to make the username of the admin unguessable.<br><br>
+Step 4- Get the username and password from the input:
+```
+const { user, pass } = req.body;
+const query = `SELECT id FROM users WHERE username = '${user}' AND password = '${pass}';`;
+```
+This query is vulnerable to SQL injection due to the concatenation of user and pass constants from the request body, and the absence of input control or sanitization. So we may think of an SQL injection attack, but the problem is we don’t know what user has isAdmin true because it's random and it's defined at runtime.<br><br>
+Step 5- Check the if the **user id** exists and if **isAdmin[user]==true**, if both conditions are true then we are redirected to the flag:
+```
+try {
+        const id = db.prepare(query).get()?.id;
+        if (!id) {
+            return res.redirect("/?message=Incorrect username or password");
+        }
+
+        if (users[id] && isAdmin[user]) {
+            return res.redirect("/?flag=" + encodeURIComponent(FLAG));
+        }
+        return res.redirect("/?message=This system is currently only available to admins...");
+    }
+    catch {
+        return res.redirect("/?message=Nice try...");
+    }
+```
+Thus we can get the flag if:<br>1/The user credential provided should return an id<br>2/The user should have admin permission<br><br>
+The trick that comes to mind is using **JavaScript prototype **inheritance**. (You can read more about it **[here]**(https://portswigger.net/web-security/prototype-pollution))<br>
+In fact, JavaScript is based on prototypes: Each Object has an attribute called '\_\_prototype__'.<br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/a2d71137-abc2-451f-8630-75edd708f8ba)<br>
+The idea is clear now, since isAdmin is JavaScript Object ```const isAdmin = {};``` then we'll get (*isAdmin[__prototype__]=true*).<br>
+The most obvious solution is to pass ***\_\_proto__*** as username. Thus, the SQL is now possible in the password field.<br>
+The easiest payload to pass as password is ***1' or id=1; --***
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/0d3eaf8e-b0a3-4e1c-b3fb-375d3f177de2)<br>
+We get our flag after submitting:![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/d05b9ffa-9957-4752-9f19-8f35e8c48351)
 ### <br>web/gpwaf<br>
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/gpwaf.png)
 
