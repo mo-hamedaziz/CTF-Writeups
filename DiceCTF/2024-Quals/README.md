@@ -13,7 +13,8 @@ In this writeup, we'll discuss 3 web challenges.<br>
 ## Web:
 ### <br>web/dicedicegoose<br>
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/dicedicegoose.png)<br>
-This is a simple web game where you can move the dice with WASD keys and you need to catch the black square (the goose). In order to win, the goose and the dice have to overlap, then an alert pops up asking for your name and after submitting you get your score.
+This is a simple web game where you can move the dice with WASD keys and you need to catch the black square (the goose). In order to win, the goose and the dice have to overlap, then an alert pops up asking for your name and after submitting you get your score.<br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/0beb3e39-0bf3-44ba-9113-3d97013ef122)<br>
 When reading the source code, you can find a function,called 'win', that prints the flag:<br>
 ```
 function win(history) {
