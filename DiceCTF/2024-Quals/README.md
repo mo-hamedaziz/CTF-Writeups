@@ -136,7 +136,7 @@ In fact, JavaScript is based on prototypes: Each Object has an attribute called 
 The idea is clear now, since isAdmin is JavaScript Object ```const isAdmin = {};``` then we'll get ```isAdmin[__prototype__]=true```.<br>
 The most obvious solution is to pass ```__proto__``` as **username**. Thus, the SQL is now possible in the password field.<br>
 The easiest payload to pass as **password** is ```whatever' or id=123; --```<br>
-![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/32012ec2-e078-449c-abb2-14bb1fcda831)<br><br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/32012ec2-e078-449c-abb2-14bb1fcda831) <br><br>
 We get our flag after submitting:<br>![image](https://github.com/mo-hamedaziz/CTF-Writeups/assets/114874129/d05b9ffa-9957-4752-9f19-8f35e8c48351)
 ### <br>web/gpwaf<br>
 ![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/364aab1b015ff96a7f8e5229ee139e9dd43cf0b0/DiceCTF/2024-Quals/assets/gpwaf.png)
