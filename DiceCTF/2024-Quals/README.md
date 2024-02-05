@@ -12,6 +12,8 @@ This has 37 challenges in total: 8 crypto, 9 misc, 6 pwn, 6 rev and 8 web. <br>
 In this writeup, we'll discuss 3 web challenges.<br>
 ## Web:
 ### <br>web/dicedicegoose<br>
-
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/06973f1edd4a587c902b46304436578890393e33/DiceCTF/2024-Quals/assets/dicedicegoose.png)
 ### <br>web/funnylogin<br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/06973f1edd4a587c902b46304436578890393e33/DiceCTF/2024-Quals/assets/funnylogin.png)
 ### <br>web/gpwaf<br>
+![image](https://github.com/mo-hamedaziz/CTF-Writeups/blob/06973f1edd4a587c902b46304436578890393e33/DiceCTF/2024-Quals/assets/gpwaf.png)
